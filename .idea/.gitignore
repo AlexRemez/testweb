@@ -1,0 +1,14 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+C:\Users\remez\PycharmProjects\test_web_2\.idea\misc.xml
+C:\Users\remez\PycharmProjects\test_web_2\.idea\modules.xml
+C:\Users\remez\PycharmProjects\test_web_2\.idea\inspectionProfiles\profiles_settings.xml
+C:\Users\remez\PycharmProjects\test_web_2\.idea\inspectionProfiles\Project_Default.xml
+C:\Users\remez\PycharmProjects\test_web_2\.idea\test_web_2.iml
+C:\Users\remez\PycharmProjects\test_web_2\.idea\vcs.xml
