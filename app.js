@@ -90,6 +90,8 @@ function attachButtonClickHandlers() {
             .catch((error) => {
                 console.error('Error:', error);
             });
+
+            tg.close();
         });
     });
 }
