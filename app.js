@@ -86,13 +86,13 @@ function attachButtonClickHandlers() {
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
+                tg.close(); // Закрываем tg после успешной отправки данных
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
         });
     });
-    tg.close();
 }
 
 function populateTags() {
