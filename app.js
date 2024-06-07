@@ -71,7 +71,8 @@ function attachButtonClickHandlers() {
 
             // Формируем данные для отправки на сервер
             const data = {
-                text: `UserID: ${tg.initDataUnsafe.user.id}\nExercise: ${cardTitle}`
+                userID: `${userID}`,
+                Exercise: `${cardTitle}`
             };
 
             // Отправляем данные на сервер
