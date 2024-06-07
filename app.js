@@ -76,7 +76,7 @@ function attachButtonClickHandlers() {
             };
 
             // Отправляем данные на сервер
-            fetch('http://localhost:8000/send-message', {
+            fetch('https://bat-keen-robin.ngrok-free.app/send-message', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
