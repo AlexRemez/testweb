@@ -1,14 +1,21 @@
 import asyncio
 import logging
+
+from aiogram.types import FSInputFile
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from aiogram import Bot, Dispatcher, types
 import start_message
-
+from functions.exercise import get_ex_dict
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 API_TOKEN = "6193754959:AAEGUA1cFmEQqP-8Rnm4SdXidiuJJ3YqQH4"
 YOUR_CHAT_ID = "5691938305"  # Обновите после получения chat_id
 
+
 app = FastAPI()
+templates = Jinja2Templates(directory="templates")
+
 
 # Настройка CORS
 app.add_middleware(
@@ -33,12 +40,36 @@ async def on_startup():
 
 
 @app.post("/send-message")
-async def send_message(request: Request):
+async def send_web_message(request: Request):
+    print(f"\n\nПолучено с -> {request.url}")
     data = await request.json()
-    message = data.get("text", "No text provided")
     print(data)
-    await bot.send_message(chat_id=YOUR_CHAT_ID, text=message)
-    return {"status": "Message sent"}
+    exercise: str = data.get("Exercise", "No exercise")
+    exercise: dict = get_ex_dict("exercises_co.json", exercise)
+
+    # user_id = data.get("userID", "No userID")
+    # ФУНЦКИЯ ОТПРАВКИ УПРАЖНЕНИЯ В БОТА
+    # text = f"<b>{exercise['ex_name']}</b>\n\n" \
+    #        f"Description: {exercise['ex_description']}\n\n" \
+    #        f"Rules: {exercise['ex_rules']}\n\n" \
+    #        f"Tags: {exercise['ex_tags']}"
+    # img_pth = FSInputFile(f"images/{exercise['ex_name']}.jpg")
+    # await bot.send_photo(chat_id=user_id, photo=img_pth, caption=text, parse_mode="HTML")
+
+    img_pth = f"images/{exercise['ex_name']}.jpg"
+    # Возврат другой HTML-страницы
+    return templates.TemplateResponse("result.html", {"request": request,
+                                                      "exercise": exercise['ex_name'],
+                                                      "ex_rules": exercise['ex_rules'],
+                                                      "ex_description": exercise['ex_description'],
+                                                      "ex_tags": exercise['ex_tags'],
+                                                      "img_pth": img_pth
+
+                                                      })
+
+
+
+
 
 
 # @dp.message()
@@ -55,4 +86,4 @@ async def start_polling():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host='0.0.0.0', port=8000)
+    uvicorn.run(app, host='0.0.0.0', port=80)

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Exercise Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 16px;
+            text-align: center;
+        }
+        .card img {
+            max-width: 100%;
+            border-radius: 4px;
+        }
+        .card h3 {
+            margin: 16px 0;
+        }
+        .card p {
+            margin: 8px 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>{{exercise}}</h1>
+        <img src="{{ img_pth }}" alt="{{ exercise }}">
+        <p>{{ ex_rules }}</p>
+        <p>{{ ex_description }}</p>
+        <p>{{ ex_tags }}</p>
+        <button class="redirect-btn" onclick="window.location.href='https://alexremez.github.io/testweb/'">Главная</button>
+    </div>
+
+</body>
+</html>
+
