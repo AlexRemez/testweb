@@ -1,0 +1,10 @@
+venv
+exercises_co.json
+images
+test_files
+web_app
+bot.py
+start_message.py
+functions
+handlers
+.idea
