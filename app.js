@@ -60,40 +60,40 @@ function renderExercises() {
 }
 
 function attachButtonClickHandlers() {
-    // Добавляем обработчик нажатия на кнопки для каждой карточки
-    document.querySelectorAll('.change-color-btn').forEach((btn, index) => {
-        btn.addEventListener('click', () => {
-            const card = document.querySelectorAll('.card')[index]; // Находим соответствующую карточку
-            card.style.backgroundColor = '#f0f0f0'; // Изменяем цвет карточки
+            document.querySelectorAll('.change-color-btn').forEach((btn, index) => {
+                btn.addEventListener('click', async () => {
+                    const card = document.querySelectorAll('.card')[index];
+                    card.style.backgroundColor = '#f0f0f0';
 
-            const cardTitle = card.querySelector('h3').innerText; // Получаем название карточки
-            const userID = tg.initDataUnsafe.user.id
+                    const cardTitle = card.querySelector('h3').innerText;
+                    const userID = tg.initDataUnsafe.user.id;
 
-            // Формируем данные для отправки на сервер
-            const data = {
-                userID: `${userID}`,
-                Exercise: `${cardTitle}`
-            };
+                    const data = {
+                        userID: `${userID}`,
+                        Exercise: `${cardTitle}`
+                    };
 
-            // Отправляем данные на сервер
-            fetch('https://bat-keen-robin.ngrok-free.app/send-message', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                // tg.close(); // Закрываем tg после успешной отправки данных
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+                    try {
+                        const response = await fetch('https://bat-keen-robin.ngrok-free.app/send-message', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+
+                        if (response.ok) {
+                            const result = await response.text();
+                            document.body.innerHTML = result;
+                        } else {
+                            console.error('Network response was not ok.');
+                        }
+                    } catch (error) {
+                        console.error('Fetch error:', error);
+                    }
+                });
             });
-        });
-    });
-}
+        }
 
 function populateTags() {
     const tagSet = new Set();
