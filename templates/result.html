@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <title>Exercise Page</title>
     <style>
         body {
@@ -10,9 +9,10 @@
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #f5f5f5;
         }
         .card {
@@ -22,6 +22,7 @@
             width: 300px;
             padding: 16px;
             text-align: center;
+            margin-bottom: 20px;
         }
         .card img {
             max-width: 100%;
@@ -33,7 +34,67 @@
         .card p {
             margin: 8px 0;
         }
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
 
+        button:hover {
+            background-color: #0056b3;
+        }
+        .table-container {
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 16px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .rating {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .star {
+            color: gold;
+            margin: 0 2px;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .card {
+                width: 100%;
+            }
+            .table-container {
+                width: 100%;
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -43,9 +104,33 @@
         <p>{{ ex_rules }}</p>
         <p>{{ ex_description }}</p>
         <p>{{ ex_tags }}</p>
-        <button class="redirect-btn" onclick="window.location.href='https://alexremez.github.io/testweb/'">Главная</button>
+        <button class="redirect-btn" onclick="window.location.href='https://bat-keen-robin.ngrok-free.app/'">Главная</button>
     </div>
 
+    <div class="table-container">
+        <h1>Рейтинг упражнения</h1>
+        <table id="ratingsTable">
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Результат</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in exercise_data %}
+                <tr>
+                    <td>{{ row["first_name"] }}</td>
+                    <td>
+                        <div class="rating">
+                            {% for i in range(0, row["result"]) %}
+                                <span class="star">&#9733;</span>
+                            {% endfor %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
-

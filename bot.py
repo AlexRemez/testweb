@@ -1,21 +1,32 @@
+import ast
 import asyncio
 import logging
 
 from aiogram.types import FSInputFile
 from fastapi import FastAPI, Request
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from aiogram import Bot, Dispatcher, types
 import start_message
 from functions.exercise import get_ex_dict
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+
+from db.db import create_connection, get_exercise_data
+
 API_TOKEN = "6193754959:AAEGUA1cFmEQqP-8Rnm4SdXidiuJJ3YqQH4"
 YOUR_CHAT_ID = "5691938305"  # Обновите после получения chat_id
-
+STATIC_FILES = "/static"
+DB_FILE = Path(__file__).parent / "db/app_db.db"
 
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")
+# Define the path to the templates directory
+templates_path = Path(__file__).parent / "templates"
+templates = Jinja2Templates(directory=templates_path)
 
+# Mount the static files directory
+app.mount(STATIC_FILES, StaticFiles(directory="static"), name="static")
 
 # Настройка CORS
 app.add_middleware(
@@ -39,42 +50,59 @@ async def on_startup():
     asyncio.create_task(start_polling())
 
 
-@app.post("/send-message")
-async def send_web_message(request: Request):
+@app.get("/")
+async def read_root():
+    return FileResponse('index.html')
+
+
+@app.get("/exercise")
+async def exercise(request: Request):
     print(f"\n\nПолучено с -> {request.url}")
-    data = await request.json()
-    print(data)
-    exercise: str = data.get("Exercise", "No exercise")
-    exercise: dict = get_ex_dict("exercises_co.json", exercise)
-
+    data = request.query_params.get("data")
+    data = ast.literal_eval(data)
+    print(type(data), ":", data)
+    exercise: str = data.get("exercise", "No exercise")
+    exercise: dict = get_ex_dict("static/json/exercises_co.json", exercise)
+    print(20 * "=", "\n", exercise, "\n", 20 * "=")
     # user_id = data.get("userID", "No userID")
-    # ФУНЦКИЯ ОТПРАВКИ УПРАЖНЕНИЯ В БОТА
-    # text = f"<b>{exercise['ex_name']}</b>\n\n" \
-    #        f"Description: {exercise['ex_description']}\n\n" \
-    #        f"Rules: {exercise['ex_rules']}\n\n" \
-    #        f"Tags: {exercise['ex_tags']}"
-    # img_pth = FSInputFile(f"images/{exercise['ex_name']}.jpg")
-    # await bot.send_photo(chat_id=user_id, photo=img_pth, caption=text, parse_mode="HTML")
 
-    img_pth = f"images/{exercise['ex_name']}.jpg"
+    ex_num = exercise['ex_name'].replace(" ", "_")
+    print(ex_num)
+    # Подключение к базе данных
+    conn = create_connection(DB_FILE)
+
+    with conn:
+        rows = get_exercise_data(conn, exercise=ex_num)
+
+    # Подготовка данных для шаблона
+    exercise_data = [{"first_name": row[0], "result": int(row[1])} for row in rows]
+
+    img_pth = f"/static/images/{exercise['ex_name']}.jpg"
     # Возврат другой HTML-страницы
+
     return templates.TemplateResponse("result.html", {"request": request,
                                                       "exercise": exercise['ex_name'],
                                                       "ex_rules": exercise['ex_rules'],
                                                       "ex_description": exercise['ex_description'],
                                                       "ex_tags": exercise['ex_tags'],
-                                                      "img_pth": img_pth
-
+                                                      "img_pth": img_pth,
+                                                      "exercise_data": exercise_data
                                                       })
 
 
+@app.post("/exercise")
+async def send_web_message(request: Request):
+    print(f"\n\nПолучено с -> {request.url}")
+    data = await request.json()
+    print(type(data), ":", data)
+
+
+@app.get("/ranking")
+async def get_ranking(request: Request):
 
 
 
-
-# @dp.message()
-# async def echo(message: types.Message):
-#     await message.answer(message.text)
+    return "SOON"
 
 
 async def start_polling():
@@ -86,4 +114,5 @@ async def start_polling():
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host='0.0.0.0', port=80)

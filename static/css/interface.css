@@ -1,0 +1,136 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 16px;
+    background-color: #f9f9f9;
+    margin: 0;
+}
+
+.filter {
+    position: relative;
+}
+
+.filter select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    appearance: none; /* Скрытие стандартного стрелочного элемента в Chrome и Safari */
+    -webkit-appearance: none; /* Скрытие стандартного стрелочного элемента в Chrome и Safari */
+    -moz-appearance: none; /* Скрытие стандартного стрелочного элемента в Firefox */
+    background-color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+.filter select::-ms-expand {
+    display: none; /* Скрытие стандартного стрелочного элемента в Internet Explorer */
+}
+
+.filter label {
+    margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+}
+
+/* Стили для опций выпадающего списка */
+.filter select option {
+    background-color: white;
+    color: #333;
+}
+
+.search input, .filter select {
+    width: calc(100% - 80px);
+    padding: 8px;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 15px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.pagination button {
+    margin: 0 8px;
+}
+
+.rating-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    transition: background-color 0.3s, width 0.3s, height 0.3s, top 0.3s, right 0.3s;
+    z-index: 1000; /* Убедимся, что кнопка находится поверх других элементов */
+    outline: none; /* Убираем стандартное обводку при фокусе */
+}
+
+.rating-button:focus {
+    outline: none; /* Убираем стандартное обводку при фокусе */
+}
+
+.rating-button i {
+    font-size: 24px;
+}
+
+.rating-button:hover {
+    background-color: #e67e22;
+}
+
+/* Медиазапросы для мобильных устройств */
+@media (max-width: 600px) {
+    .rating-button {
+        width: 70px;
+        height: 70px;
+        top: 10px;
+        right: 10px;
+    }
+
+    .rating-button i {
+        font-size: 35px;
+    }
+}
+
+/* Убираем стандартную обводку на мобильных устройствах (специально для iOS и Android) */
+.rating-button:active, .rating-button:focus {
+    outline: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Повторяем тень, чтобы сохранить стиль */
+}
+
+/* Убираем выделение при нажатии на мобильных устройствах */
+.rating-button:active {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Убираем стандартный стиль формы для WebKit-браузеров (Chrome, Safari) */
+.filter select {
+    -webkit-appearance: none;
+}
+

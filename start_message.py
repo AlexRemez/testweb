@@ -14,25 +14,12 @@ async def start_command_handler(message: types.Message):
     """
     Обработчик команды /start
     """
-
-    web = WebAppInfo(url="https://alexremez.github.io/test_web_2/")
-    web2 = WebAppInfo(url="https://alexremez.github.io/testweb/")
-    kb2 = ReplyKeyboardBuilder()
-    kb2.add(KeyboardButton(text="⭐️WEB", web_app=web2))
+    print(f"Команда /start от: {message.from_user.first_name} - {message.from_user.username}({message.from_user.id})")
+    web = WebAppInfo(url="https://bat-keen-robin.ngrok-free.app/")
     kb = InlineKeyboardBuilder()
-    kb.add(InlineKeyboardButton(text="Тыкай", web_app=web2))
+    kb.add(InlineKeyboardButton(text="Тыкай", web_app=web))
     kb.adjust(1)
     await message.answer(
         text="Нихао, Мой Друг!\nВот тебе приложение, но только в телеграме :)",
         reply_markup=kb.as_markup()
     )
-
-
-@start_router.message(types.Message)
-async def get_data(web_app_data: types.WebAppData):
-    print("OKKKKKKKKKKKKKKKKKKK")
-    print(web_app_data)
-    data = web_app_data.json()
-    print(data)
-
-

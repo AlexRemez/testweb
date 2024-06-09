@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <title>BOT Exercises</title>
 
-    <link rel="stylesheet" href="styles/card.css">
-    <link rel="stylesheet" href="styles/interface.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/card.css">
+    <link rel="stylesheet" href="/static/css/interface.css?v=1.9">
 
 </head>
 <body>
@@ -30,9 +31,13 @@
         <button onclick="nextPage()">Вперед</button>
     </div>
 
+    <a href="/ranking" class="rating-button">
+        <i class="fas fa-trophy"></i>
+    </a>
+
     <div id="exercises-container"></div>
 
-    <script src="app.js"></script>
+    <script src="/static/js/app.js"></script>
 
 </body>
 </html>
