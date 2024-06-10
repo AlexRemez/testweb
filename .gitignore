@@ -1,10 +1,6 @@
 venv
 static/json/exercises_co.json
 static/images
-test_files
-web_app
-bot.py
-start_message.py
-functions
-handlers
 .idea
+app_db.db
+.gitignore
