@@ -10,6 +10,8 @@ tg.expand(); //открывает веб-приложение во все окн
 tg.ready(); // Инициализация
 // console.log("Telegram WebApp initialized:", tg.initDataUnsafe); // Пример использования tg
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
     fetch('/static/json/exercises_co.json')
         .then(response => response.json())
@@ -69,7 +71,7 @@ function attachButtonClickHandlers() {
 
             // Собираем все параметры в объект data
             const data = {
-                // userID: userID,
+                tg_id: tg.initDataUnsafe.user.id,
                 exercise: cardTitle
             };
 

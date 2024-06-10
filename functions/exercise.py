@@ -1,18 +1,15 @@
 import json
 
 
-def get_ex_dict(json_file, exercise_num):
+def get_ex_dict(json_file, ex_name):
     # Читаем содержимое JSON файла
     with open(json_file, 'r') as file:
         data = json.load(file)
 
-    # Номер упражнения, которое вы ищете
-    exercise_number = exercise_num.split(' ')[1]
-
     # Поиск блока данных по номеру упражнения
     exercise_data = None
     for exercise in data:
-        if exercise['ex_name'].endswith(str(exercise_number)):
+        if exercise['ex_name'].endswith(str(ex_name)):
             exercise_data = exercise
             break
 

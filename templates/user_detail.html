@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Detail</title>
+    <link rel="stylesheet" href="/static/css/a_user_detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+    <div class="notification-container" id="notificationContainer">
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <div class="user-card">
+        <h1>Информация о пользователе</h1>
+        <div class="user-info">
+            <p>TG ID: <span id="tg_id">{{ user.tg_id }}</span></p>
+            <p>First Name: <span id="first_name">{{ user.first_name }}</span></p>
+            <p>Username: <span id="username">{{ user.username }}</span></p>
+            <p>Global Points: <span id="global_points">{{ user.global_points }}</span></p>
+        </div>
+        <button id="edit-btn">Edit</button>
+        <form id="edit-form" style="display: none;">
+            <!-- Форма для редактирования данных -->
+            <input type="text" id="edit-tg_id" placeholder="TG ID" value="{{ user.tg_id }}">
+            <input type="text" id="edit-first_name" placeholder="First Name" value="{{ user.first_name }}">
+            <input type="text" id="edit-username" placeholder="Username" value="{{ user.username }}">
+            <input type="text" id="edit-global_points" placeholder="Global Points" value="{{ user.global_points }}">
+            <button id="save-btn">Save</button>
+            <button id="cancel-btn">Cancel</button>
+        </form>
+        <button class="delete-btn" id="delete-btn">Удалить <svg width="12" height="12" viewBox="0 0 24 24"><path fill="white" d="M19.8 5.6l-1.4-1.4-6.4 6.4-6.4-6.4-1.4 1.4 6.4 6.4-6.4 6.4 1.4 1.4 6.4-6.4 6.4 6.4 1.4-1.4-6.4-6.4z"/></svg></button>
+    </div>
+
+    <div class="modal" id="confirm-modal">
+        <div class="modal-content">
+            <p>Это действие безвозвратно удалит пользователя!</p>
+            <div class="modal-buttons">
+                <button class="confirm-btn" id="confirm-delete-btn">Удалить</button>
+                <button class="cancel-btn" id="cancel-delete-btn">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <a id="transfer" href="/admin/users"><i class="fas fa-arrow-left"></i></a>
+
+    <script src="/static/js/a_user_detail.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* Белый цвет фона */
+    color: #000000; /* Цвет текста */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #0099ff; /* Светло-голубой цвет для заголовка */
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #0099ff; /* Светло-голубой цвет для кнопки */
+    color: #ffffff; /* Белый цвет текста кнопки */
+    border: none;
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+a {
+    color: #0099ff; /* Светло-голубой цвет для ссылок */
+    text-decoration: none;
+}
+
+.add-link {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    background-color: #0099ff; /* Светло-голубой цвет для кнопки "+" */
+    color: #ffffff; /* Белый цвет текста кнопки */
+    padding: 10px 15px;
+    border-radius: 50%;
+    text-decoration: none;
+}
+
+.notification {
+            background-color: #f8d7da; /* Светло-красный цвет */
+            color: #721c24;
+            padding: 10px;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }

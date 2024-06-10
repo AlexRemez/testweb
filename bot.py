@@ -2,16 +2,18 @@ import ast
 import asyncio
 import logging
 
-from aiogram.types import FSInputFile
+from aiogram.types import FSInputFile, CallbackQuery
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from aiogram import Bot, Dispatcher, types
 import start_message
+from db import db
 from functions.exercise import get_ex_dict
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
+from functions.points import calc_points
 
 from db.db import create_connection, get_exercise_data
 
@@ -39,6 +41,34 @@ DB_FILE = Path(__file__).parent / "db/app_db.db"
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
+
+
+@dp.callback_query()
+async def handle(callback: CallbackQuery):
+    data = callback.data
+    data = data.split('!_!')
+    ex_num = data[1].replace(' ', '_')
+    exercise = get_ex_dict(json_file="static/json/exercises_co.json", ex_name=data[1])
+    points = calc_points(exercise=exercise)
+    user = dict(db.get_user(tg_id=data[0]))
+    ex_points = user.get(ex_num)
+    global_points = user['global_points']
+    if global_points is None:
+        global_points = points
+        new_data = {ex_num: points, 'global_points': global_points}
+        db.update_user(tg_id=data[0], data=new_data)
+        await callback.message.edit_text(text="Готово", reply_markup=None)
+    else:
+        if ex_points is None:
+            global_points += points
+            new_data = {ex_num: points, 'global_points': global_points}
+            db.update_user(tg_id=data[0], data=new_data)
+            await callback.message.edit_text(text="Готово", reply_markup=None)
+        else:
+            await callback.message.edit_text(text="Уже есть результат!", reply_markup=None)
+
+
+
 
 
 def add_routes(dispatcher: Dispatcher):
