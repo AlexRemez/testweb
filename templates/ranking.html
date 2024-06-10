@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <title>Exercise Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
     <style>
+        body {
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0; /* Начальная непрозрачность */
+        }
 
         body.fade-in {
             opacity: 1; /* Установка полной непрозрачности */
@@ -14,6 +17,7 @@
         body.fade-out {
             opacity: 0;
         }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -24,53 +28,6 @@
             align-items: center;
             min-height: 100vh;
             background-color: #f5f5f5;
-            transition: opacity 0.5s ease-in-out;
-            opacity: 0; /* Начальная непрозрачность */
-        }
-        .card {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            padding: 16px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .card img {
-            max-width: 100%;
-            border-radius: 4px;
-        }
-        .card h3 {
-            margin: 16px 0;
-        }
-        .card p {
-            margin: 8px 0;
-        }
-
-            button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 70px;
-            height: 70px;
-            background-color: #007bff; /* Синий цвет */
-            color: #fff; /* Белый цвет */
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            text-decoration: none;
-            transition: background-color 0.3s, width 0.3s, height 0.3s, top 0.3s, right 0.3s;
-            z-index: 1000; /* Убедимся, что кнопка находится поверх других элементов */
-            outline: none; /* Убираем стандартное обводку при фокусе */
-            cursor: pointer;
-        }
-
-        button i {
-            font-size: 35px;
-        }
 
         .table-container {
             text-align: center;
@@ -105,17 +62,37 @@
             justify-content: center;
             align-items: center;
         }
-        .star {
-            color: gold;
-            margin: 0 2px;
+
+        button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 70px;
+            height: 70px;
+            background-color: #007bff; /* Синий цвет */
+            color: #fff; /* Белый цвет */
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            transition: background-color 0.3s, width 0.3s, height 0.3s, top 0.3s, right 0.3s;
+            z-index: 1000; /* Убедимся, что кнопка находится поверх других элементов */
+            outline: none; /* Убираем стандартное обводку при фокусе */
+            cursor: pointer;
         }
+
+        button i {
+            font-size: 35px;
+        }
+
         @media (max-width: 600px) {
             body {
                 padding: 10px;
             }
-            .card {
-                width: 100%;
-            }
+
             .table-container {
                 width: 100%;
                 padding: 8px;
@@ -125,43 +102,34 @@
 </head>
 <body>
 
+    <div class="table-container">
+        <h1>Рейтинг</h1>
+            <table id="ratingsTable">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Имя</th>
+                <th>Результат</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in ranking_data %}
+            <tr>
+                <td>{{ row["rank"] }}</td>
+                <td>{{ row["first_name"] }}</td>
+                <td>
+                    <div class="rating">
+                        {{ row["points"] }}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
     <button id="transitionButton" class="rating-button">
         <i class="fas fa-arrow-left"></i> <!-- Иконка стрелки назад -->
     </button>
-
-    <div class="card">
-        <h1>{{exercise}}</h1>
-        <img src="{{ img_pth }}" alt="{{ exercise }}">
-        <p>{{ ex_rules }}</p>
-        <p>{{ ex_description }}</p>
-        <p>{{ ex_tags }}</p>
-    </div>
-
-    <div class="table-container">
-        <h1>Рейтинг упражнения</h1>
-        <table id="ratingsTable">
-            <thead>
-                <tr>
-                    <th>Имя</th>
-                    <th>Результат</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in exercise_data %}
-                <tr>
-                    <td>{{ row["first_name"] }}</td>
-                    <td>
-                        <div class="rating">
-                            {% for i in range(0, row["result"]) %}
-                                <span class="star">&#9733;</span>
-                            {% endfor %}
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -177,5 +145,7 @@
             }, 500); // Должно совпадать с продолжительностью перехода в CSS
         });
     </script>
+
+
 </body>
 </html>

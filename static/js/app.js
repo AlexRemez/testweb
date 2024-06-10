@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
             filteredExercises = [...exercises];
             renderExercises();
             populateTags();
+
         })
         .catch(error => console.error('Error loading JSON:', error));
 });
@@ -45,7 +46,6 @@ function renderExercises() {
         card.innerHTML = `
             <h3>${exercise.ex_name}</h3>
             <img src="${imgSrc}" alt="${exercise.ex_name}">
-            <p>${exercise.ex_description || ''}</p>
             <p>Тэги: ${exercise.ex_tags.join(", ")}</p>
             <button class="change-color-btn" >Выбрать</button> <!-- Добавляем кнопку -->
         `;
@@ -129,3 +129,5 @@ function nextPage() {
         renderExercises();
     }
 }
+
+

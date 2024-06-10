@@ -8,14 +8,23 @@ cursor = connection.cursor()
 drill_fields = ", ".join([f"Drill_{i} TEXT" for i in range(1, 438)])
 
 # Создаем таблицу Users
-cursor.execute(f'''
-CREATE TABLE IF NOT EXISTS Users (
-tg_id INTEGER NOT NULL UNIQUE,
-first_name TEXT,
-username TEXT,
-{drill_fields}
-)
-''')
+# cursor.execute(f'''
+# CREATE TABLE IF NOT EXISTS Users (
+# tg_id INTEGER NOT NULL UNIQUE,
+# first_name TEXT,
+# username TEXT,
+# global_points INTEGER,
+# {drill_fields}
+# )
+# ''')
+
+# Выполняем запрос ALTER TABLE
+try:
+    cursor.execute("ALTER TABLE Users ADD COLUMN global_points INTEGER;")
+    connection.commit()
+    print("Новый столбец успешно добавлен.")
+except sqlite3.OperationalError as e:
+    print("Ошибка:", e)
 
 
 def create_connection(db_file):

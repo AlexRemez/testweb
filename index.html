@@ -6,10 +6,24 @@
     <title>BOT Exercises</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/static/css/card.css">
     <link rel="stylesheet" href="/static/css/interface.css?v=1.9">
+    <style>
+        body {
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0; /* Начальная непрозрачность */
+        }
 
+        body.fade-in {
+            opacity: 1; /* Установка полной непрозрачности */
+        }
+
+        body.fade-out {
+            opacity: 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -31,12 +45,27 @@
         <button onclick="nextPage()">Вперед</button>
     </div>
 
-    <a href="/ranking" class="rating-button">
+    <a id="transitionButton" href="/ranking" class="rating-button">
         <i class="fas fa-trophy"></i>
     </a>
 
     <div id="exercises-container"></div>
 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('fade-in'); // Добавление класса fade-in при загрузке страницы
+        });
+
+        document.getElementById('transitionButton').addEventListener('click', function(event) {
+            event.preventDefault(); // Отменить стандартное поведение
+            document.body.classList.add('fade-out');
+
+            setTimeout(function() {
+                window.location.href = '/ranking'; // Перенаправить после анимации
+            }, 500); // Должно совпадать с продолжительностью перехода в CSS
+        });
+    </script>
     <script src="/static/js/app.js"></script>
 
 </body>
