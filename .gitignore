@@ -1,5 +1,4 @@
 venv
-static/json/exercises_co.json
 static/images
 .idea
 app_db.db
