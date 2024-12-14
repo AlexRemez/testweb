@@ -15,7 +15,7 @@ from pathlib import Path
 
 from db.db import create_connection, get_exercise_data
 
-API_TOKEN = "6193754959:AAEGUA1cFmEQqP-8Rnm4SdXidiuJJ3YqQH4"
+API_TOKEN = ""
 YOUR_CHAT_ID = "5691938305"  # Обновите после получения chat_id
 STATIC_FILES = "/static"
 DB_FILE = Path(__file__).parent / "db/app_db.db"
