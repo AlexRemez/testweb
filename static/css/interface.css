@@ -1,133 +1,119 @@
+/* ---------------------------- */
+/* Общие стили страницы          */
+/* ---------------------------- */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 16px;
-    background-color: #f9f9f9;
     margin: 0;
-}
-
-.filter {
-    position: relative;
-    margin-bottom: 16px;
-}
-
-.filter label {
-    margin-bottom: 5px;
-    display: block;
-    font-weight: bold;
-}
-
-.filter select {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    appearance: none; /* Скрытие стандартного стрелочного элемента в Chrome и Safari */
-    -webkit-appearance: none; /* Скрытие стандартного стрелочного элемента в Chrome и Safari */
-    -moz-appearance: none; /* Скрытие стандартного стрелочного элемента в Firefox */
-    background-color: white;
-    cursor: pointer;
-    outline: none;
-    margin-bottom: 8px;
-}
-
-.filter select::-ms-expand {
-    display: none; /* Скрытие стандартного стрелочного элемента в Internet Explorer */
-}
-
-/* Стили для опций выпадающего списка */
-.filter select option {
-    background-color: white;
+    background-color: #eef2f7;
     color: #333;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.search input, .filter select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* ---------------------------- */
+/* Контейнер карточек            */
+#exercises-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* меньше min-width для мобильных */
+    gap: 12px;
+    margin-top: 16px;
+    padding: 0 8px; /* внутренние отступы, чтобы карточки не упирались в края */
     box-sizing: border-box;
 }
 
+/* ---------------------------- */
+/* Поиск и фильтры               */
+.search input, .filter select {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    border: none;
+    border-radius: 12px;
+    box-sizing: border-box;
+    font-size: 16px;
+    outline: none;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.search input:focus, .filter select:focus {
+    box-shadow: 0 6px 14px rgba(0,123,255,0.25);
+    transform: scale(1.01);
+}
+
+.filter label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+    color: #333;
+}
+
+/* Скрываем стандартные стрелки select */
+.filter select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* ---------------------------- */
+/* Кнопки                        */
 button {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
     font-size: 16px;
-    margin-bottom: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s, box-shadow 0.2s;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }
 
 button:hover {
-    background-color: #0056b3;
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
 }
 
+button:active {
+    transform: scale(0.97);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+/* ---------------------------- */
+/* Пагинация                     */
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 16px;
+    margin-top: 20px;
+    gap: 12px;
 }
 
 .pagination button {
-    margin: 0 8px;
-    padding: 10px 20px;
-    font-size: 16px;
+    width: auto;
+    min-width: 80px;
 }
 
-/* Стили для кнопки рейтинга */
-.rating-button {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    width: 70px;
-    height: 70px;
-    background-color: #f39c12;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    text-decoration: none;
-    transition: background-color 0.3s, width 0.3s, height 0.3s, top 0.3s, right 0.3s;
-    z-index: 1000; /* Убедимся, что кнопка находится поверх других элементов */
-    outline: none; /* Убираем стандартную обводку при фокусе */
-}
-
-.rating-button:focus {
-    outline: none; /* Убираем стандартную обводку при фокусе */
-}
-
-.rating-button i {
-    font-size: 35px;
-}
-
-.rating-button:hover {
-    background-color: #e67e22;
-}
-
-/* Медиазапросы для мобильных устройств */
+/* ---------------------------- */
+/* Адаптивность                  */
 @media (max-width: 600px) {
     body {
-        padding: 8px;
-    }
-
-    .filter select {
-        font-size: 14px;
-    }
-
-    .search input, .filter select {
         padding: 10px;
-        font-size: 14px;
     }
 
-    button {
+    #exercises-container {
+        grid-template-columns: 1fr; /* одна колонка на маленьких экранах */
+        gap: 10px;
+        padding: 0 6px;
+    }
+
+    .search input, .filter select, button {
         font-size: 14px;
         padding: 10px;
     }
@@ -137,30 +123,74 @@ button:hover {
         padding: 8px 16px;
     }
 
-    .rating-button {
-        width: 70px;
-        height: 70px;
-        top: 20px;
-        right: 20px;
-    }
 
-    .rating-button i {
-        font-size: 35px;
+    .card {
+        margin: 0; /* убираем внешние маргины на узких экранах */
     }
+}
 
-    /* Убираем стандартную обводку на мобильных устройствах (специально для iOS и Android) */
-    .rating-button:active, .rating-button:focus {
-        outline: none;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Повторяем тень, чтобы сохранить стиль */
-    }
+/* ---------------------------- */
+/* Нижняя навигация             */
+/* ---------------------------- */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background-color: #f1f3f6; /* изменён фон контейнера */
+    padding: 10px 0;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    border-top: 1px solid #d0d0d0;
+}
 
-    /* Убираем выделение при нажатии на мобильных устройствах */
-    .rating-button:active {
-        -webkit-tap-highlight-color: transparent;
-    }
+.bottom-nav button {
+    flex: 1;
+    margin: 0 10px;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    transition: transform 0.2s, background 0.3s, box-shadow 0.2s;
+}
 
-    /* Убираем стандартный стиль формы для WebKit-браузеров (Chrome, Safari) */
-    .filter select {
-        -webkit-appearance: none;
+.bottom-nav button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+}
+
+.bottom-nav button:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Деактивная кнопка (текущая страница) */
+.bottom-nav button.disabled {
+    background: #c0c0c0; /* серый фон */
+    color: #666;
+    cursor: default;
+    box-shadow: none;
+    transform: none;
+}
+
+.bottom-nav button.disabled:hover {
+    transform: none;
+    box-shadow: none;
+    background: #c0c0c0; /* остаётся серым */
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 600px) {
+    .bottom-nav button {
+        font-size: 14px;
+        padding: 10px 0;
+        margin: 0 6px;
     }
 }

@@ -1,18 +1,65 @@
+/* ---------------------------- */
+/* Карточки упражнений           */
+/* ---------------------------- */
 .card {
-    border: 1px solid #ccc;
+    background: linear-gradient(145deg, #ffffff, #f1f3f6); /* лёгкий градиент */
+    border-radius: 16px;
     padding: 16px;
-    margin: 16px;
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    border: 1px solid #e0e0e0;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+    box-sizing: border-box; /* важно для мобильных */
+}
+
+.card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 16px 30px rgba(0,0,0,0.12);
+}
+
+.card:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
 }
 
 .card img {
-    max-width: 100%;
-    border-radius: 4px;
+    width: 100%;
+    height: 100%; /* высота подстраивается */
+    border-radius: 12px;
+    margin-bottom: 12px;
+    transition: transform 0.25s ease;
+    object-fit: contain; /* изображение полностью помещается */
+    background-color: #f0f0f0; /* фон для прозрачных/меньших картинок */
+}
+
+
+.card img:hover {
+    transform: scale(1.03);
+}
+
+.card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #222;
+}
+
+.card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    .card img {
+        height: 140px;
+    }
+    .card h3 {
+        font-size: 16px;
+    }
+    .card p {
+        font-size: 13px;
+    }
 }

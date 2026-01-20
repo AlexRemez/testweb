@@ -28,8 +28,8 @@ async def start_command_handler(message: types.Message, bot: Bot):
 
 
 
-    web = WebAppInfo(url="https://bat-keen-robin.ngrok-free.app/")
-    admin_web = WebAppInfo(url="https://bat-keen-robin.ngrok-free.app/admin")
+    web = WebAppInfo(url="https://7794288c915e8e.lhr.life")
+    admin_web = WebAppInfo(url="https://7794288c915e8e.lhr.life/admin")
     kb = InlineKeyboardBuilder()
     kb.add(InlineKeyboardButton(text="Открыть", web_app=web))
     if message.from_user.id == 5691938305 or message.from_user.id == 131956265:

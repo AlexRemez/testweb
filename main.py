@@ -226,4 +226,5 @@ async def send_result(request: Request, verification: str = Form(...), attempt: 
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host='127.0.0.1', port=80)
+    uvicorn.run(app, host='0.0.0.0', port=3000) #для запуска локально хост 0.0.0.0 и в powershell написать ssh -R 80:127.0.0.1:3000 localhost.run и полученную ссылку вставить в код start message
+

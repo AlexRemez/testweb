@@ -2,57 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Exercise Page</title>
+    <title>Рейтинг</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/ranking.css?v=1.2">
+    <link rel="stylesheet" href="/static/css/ranking.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
+<div id="main-content">
     <div class="table-container">
         <h1>Рейтинг</h1>
-            <table id="ratingsTable">
-        <thead>
-            <tr>
-                <th>№</th>
-                <th>Имя</th>
-                <th>Результат</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in ranking_data %}
-            <tr>
-                <td>{{ row["rank"] }}</td>
-                <td>{{ row["first_name"] }}</td>
-                <td>
-                    <div class="rating">
-                        {{ row["points"] }}
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <table id="ratingsTable">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Имя</th>
+                    <th>Результат</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in ranking_data %}
+                <tr>
+                    <td>{{ row["rank"] }}</td>
+                    <td>{{ row["first_name"] }}</td>
+                    <td>
+                        <div class="rating">{{ row["points"] }}</div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    <button id="transitionButton" class="rating-button">
-        <i class="fas fa-arrow-left"></i> <!-- Иконка стрелки назад -->
-    </button>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.body.classList.add('fade-in'); // Добавление класса fade-in при загрузке страницы
-        });
+    <div class="bottom-nav">
+        <button id="btn-home" onclick="goToPage('/')">Упражнения</button>
+        <button id="btn-ranking" onclick="goToPage('/ranking')">Рейтинг</button>
+    </div>
+</div>
+<script src="/static/js/app.js?v=1.23"></script>
 
-        document.getElementById('transitionButton').addEventListener('click', function(event) {
-            event.preventDefault(); // Отменить стандартное поведение
-            document.body.classList.add('fade-out');
+<script>
+const tg = window.Telegram.WebApp;
+tg.expand();
+tg.ready();
 
-            setTimeout(function() {
-                window.location.href = '/'; // Перенаправить после анимации
-            }, 500); // Должно совпадать с продолжительностью перехода в CSS
-        });
-    </script>
-
-
+function goToPage(path) {
+window.location.href = path;
+}
+</script>
 </body>
 </html>
